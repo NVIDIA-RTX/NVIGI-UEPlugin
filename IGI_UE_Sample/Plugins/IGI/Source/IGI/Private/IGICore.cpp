@@ -58,7 +58,7 @@ FIGICore::FIGICore(FString IGICoreLibraryPath)
     Pref.logLevel = nvigi::LogLevel::eDefault;
 
     const FString BaseDir = IPluginManager::Get().FindPlugin("IGI")->GetBaseDir();
-    const FString IGIPluginPath = FPaths::Combine(*BaseDir, TEXT("ThirdParty/nvigi_pack/plugins/sdk/bin/x64"));
+    const FString IGIPluginPath = FPaths::Combine(*BaseDir, TEXT("ThirdParty/nvigi_pack/bin/x64/Release"));
     const auto IGIPluginPathUTF8 = StringCast<UTF8CHAR>(*IGIPluginPath);
     const char* IGIPluginPathCStr = reinterpret_cast<const char*>(IGIPluginPathUTF8.Get());
     Pref.utf8PathsToPlugins = &IGIPluginPathCStr;

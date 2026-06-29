@@ -62,6 +62,9 @@
 !*.txt
 !*.md
 
+!docs/**/*.png
+!docs/**/*.jpg
+
 # Swift files
 *.swift
 
@@ -303,7 +306,8 @@ IGI_UE_Sample/Binaries/**/*.exp
 IGI_UE_Sample/Plugins/IGI/**/*.exp
 IGI_UE_Sample/*.sln
 
-# Include uasset files
+# Include content files
+!/IGI_UE_Sample/Content/
 !/IGI_UE_Sample/Content/**
 
 #---------------------

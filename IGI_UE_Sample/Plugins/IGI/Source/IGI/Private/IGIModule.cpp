@@ -31,8 +31,8 @@ public:
         // This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 
         FString BaseDir = IPluginManager::Get().FindPlugin("IGI")->GetBaseDir();
-        IGICoreLibraryPath = FPaths::Combine(*BaseDir, TEXT("ThirdParty/nvigi_pack/plugins/sdk/bin/x64/nvigi.core.framework.dll"));
-        IGIModelsPath = FPaths::Combine(*BaseDir, TEXT("ThirdParty/nvigi_pack/plugins/sdk/data/nvigi.models"));
+        IGICoreLibraryPath = FPaths::Combine(*BaseDir, TEXT("ThirdParty/nvigi_pack/bin/x64/Release/nvigi.core.framework.dll"));
+        IGIModelsPath = FPaths::Combine(*BaseDir, TEXT("ThirdParty/nvigi_pack/data/nvigi.models"));
     }
 
     void ShutdownModule()

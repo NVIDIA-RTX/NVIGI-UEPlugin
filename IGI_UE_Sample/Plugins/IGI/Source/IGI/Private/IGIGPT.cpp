@@ -5,7 +5,10 @@
 #include "IGIGPT.h"
 
 #include "CoreMinimal.h"
+#include "HAL/PlatformProcess.h"
 #include "ID3D12DynamicRHI.h"
+#include "Interfaces/IPluginManager.h"
+#include "Misc/Paths.h"
 
 #include "IGIModule.h"
 #include "IGILog.h"
@@ -100,7 +103,15 @@ public:
             GPTInstance = nullptr;
         }
 
+        // For the CUDA backend, createInstance brings up CUDA runtime DLLs 
+        // (cuBLAS/cuBLASLt/cuDART) by bare name; point the OS at our bundled copies 
+        // so resolution doesn't depend on a system CUDA install being on PATH.
+        const FString IGIPluginBinPath = FPaths::Combine(
+            *IPluginManager::Get().FindPlugin("IGI")->GetBaseDir(),
+            TEXT("ThirdParty/nvigi_pack/bin/x64/Release"));
+        FPlatformProcess::PushDllDirectory(*IGIPluginBinPath);
         Result = GPTInterface->createInstance(params, &GPTInstance);
+        FPlatformProcess::PopDllDirectory(*IGIPluginBinPath);
         if (Result != nvigi::kResultOk)
         {
             UE_LOG(LogIGISDK, Fatal, TEXT("Unable to create gpt.ggml.cuda instance: %s"), *GetIGIStatusString(Result));

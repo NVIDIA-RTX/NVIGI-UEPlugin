@@ -26,8 +26,8 @@ public class IGI : ModuleRules
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
-                Path.Combine([PluginDirectory, "ThirdParty", "nvigi_pack", "nvigi_core", "include"]),
-                Path.Combine([PluginDirectory, "ThirdParty", "nvigi_pack", "plugins", "sdk", "include"]),
+                Path.Combine(PluginDirectory, "ThirdParty", "nvigi_pack", "nvigi_core", "include"),
+                Path.Combine(PluginDirectory, "ThirdParty", "nvigi_pack", "include"),
 				// ... add public include paths required here ...
 			}
 			);
@@ -72,8 +72,8 @@ public class IGI : ModuleRules
 
         PublicDefinitions.Add("AIM_CORE_BINARY_NAME=TEXT(\"nvigi.core.framework.dll\")");
 
-        string PluginsBinaryPath = Path.Combine([PluginDirectory, "ThirdParty", "nvigi_pack", "plugins", "sdk", "bin", "x64"]);
-        string GPTModelPath = Path.Combine([PluginDirectory, "ThirdParty", "nvigi_pack", "plugins", "sdk", "data", "nvigi.models", "nvigi.plugin.gpt.ggml", "{8E31808B-C182-4016-9ED8-64804FF5B40D}"]);
+        string PluginsBinaryPath = Path.Combine(PluginDirectory, "ThirdParty", "nvigi_pack", "bin", "x64", "Release");
+        string GPTModelPath = Path.Combine(PluginDirectory, "ThirdParty", "nvigi_pack", "data", "nvigi.models", "nvigi.plugin.gpt.ggml", "{8E31808B-C182-4016-9ED8-64804FF5B40D}");
 
         // Core framework DLL
         RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "nvigi.core.framework.dll"));
@@ -84,8 +84,15 @@ public class IGI : ModuleRules
         RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "cublas64_12.dll"));
         RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "cublasLt64_12.dll"));
         RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "cudart64_12.dll"));
+
+        // CUDA runtime compilation (NVRTC) dependencies, bundled as of IGI 1.6.x for the GGML CUDA backend
+        RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "nvrtc64_120_0.dll"));
+        RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "nvrtc-builtins64_128.dll"));
+        RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "nvrtc-builtins.alt64_128.dll"));
+
         RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "nvigi.plugin.hwi.common.dll"));
         RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "nvigi.plugin.hwi.cuda.dll"));
+        RuntimeDependencies.Add(Path.Combine(PluginsBinaryPath, "nvigi.plugin.hwi.d3d12.dll"));
 
         RuntimeDependencies.Add(Path.Combine(GPTModelPath, "nemotron-4-mini-4b-instruct_q4_0.gguf"));
         RuntimeDependencies.Add(Path.Combine(GPTModelPath, "nvigi.model.config.json"));
